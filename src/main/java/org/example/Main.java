@@ -63,6 +63,11 @@ public class Main {
             int productId = scanner.nextInt();
             System.out.println("Enter product quantity you want to buy : ");
             int productQuantity = scanner.nextInt();
+            if(productId > 7 || productId < 1)
+            {
+                System.out.println("Incorrect Product ID entered");
+                break;
+            }
 
             for (Product product : productListObj.getProductList()) {
                 if (product.getId() == productId) {
@@ -99,10 +104,10 @@ public class Main {
         if (coupon.equals(code)){
             couponDisc = 10;
             moredisc = billPrice/couponDisc;
-            System.out.println(coupon);
+            System.out.println("Entered coupon code is: " + coupon);
         }
         else{
-            System.out.println("Incorrect coupon code !");
+            System.out.println("Incorrect coupon code Entered!!!");
         }
 
         System.out.println("\nYour bill : ");
