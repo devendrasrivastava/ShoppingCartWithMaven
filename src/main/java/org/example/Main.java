@@ -1,4 +1,6 @@
 package org.example;
+import org.example.Product;
+import org.example.ProductList;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +23,6 @@ public class Main {
     }
 
     private void displayProducts() {
-
-
         System.out.println("\n\t\t\t\tWELCOME TO Big Bazaar\n========================================================");
         System.out.println("\nWe have these products for you. Enjoy Shopping!!!");
         System.out.println("Id\t\tName\t\tQuantity\t\tPrice\t\tBrand\n--------------------------------------------------------");
@@ -32,9 +32,9 @@ public class Main {
 
     private void createProducts() {
         Product biscuit = new Product(1, "Biscuit", 800, 10, "Oreo");
-        Product namkeen = new Product(2, "Namkeen", 900, 50, "Haldiram");
+        Product namkeen = new Product(2, "Namkeen", 900, 50, "Lehar");
         Product noodle = new Product(3, "Noodles", 700, 40, "Maggie");
-        Product oat = new Product(4, "Oats", 600, 80, "Saffola");
+        Product oat = new Product(4, "Oats", 600, 80, "Oats");
         Product pen = new Product(5, "Pens", 500, 110, "Luxor");
         Product shirt = new Product(6, "Shirts", 600, 900, "Zara");
         Product shoes = new Product(7, "Shoes", 800, 100, "Bata");
@@ -63,11 +63,6 @@ public class Main {
             int productId = scanner.nextInt();
             System.out.println("Enter product quantity you want to buy : ");
             int productQuantity = scanner.nextInt();
-            if(productId > 7 || productId < 1)
-            {
-                System.out.println("Incorrect Product ID entered");
-                break;
-            }
 
             for (Product product : productListObj.getProductList()) {
                 if (product.getId() == productId) {
@@ -94,7 +89,6 @@ public class Main {
 
         } while (choice.equalsIgnoreCase("y"));
 
-
         String coupon = "extra10";
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter coupon code: ");
@@ -104,10 +98,10 @@ public class Main {
         if (coupon.equals(code)){
             couponDisc = 10;
             moredisc = billPrice/couponDisc;
-            System.out.println("Entered coupon code is: " + coupon);
+            System.out.println(coupon);
         }
         else{
-            System.out.println("Incorrect coupon code Entered!!!");
+            System.out.println("Incorrect coupon code entered !!");
         }
 
         System.out.println("\nYour bill : ");
@@ -115,7 +109,11 @@ public class Main {
         System.out.println(bill);
 
         int disc = billPrice/10;
-        System.out.println("your coupon discount is: " + moredisc + "\t\t\t\t\t" + "Your final bill after all discount is: " + ((billPrice - disc)-moredisc) );
+        double gstamt = (((billPrice - disc + 20)-moredisc)*0.14);
+        System.out.println("your coupon discount is:\t\t\t\t\t\t\t\t\t\t\t\t\t " + moredisc);
+        System.out.println("delivery charge is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 20");
+        System.out.println("GST: 14% after discount:\t\t\t\t\t\t\t\t\t\t\t\t\t" +String.format("%.2f",gstamt));
+        System.out.println("Your final bill is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + (((billPrice - disc + 20)-moredisc) + gstamt));
 
         System.out.println("\nDo you again want to see products?(Y/N)");
         String seeProducts = scanner.next();
