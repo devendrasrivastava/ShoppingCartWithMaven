@@ -1,4 +1,3 @@
-package org.example;
 import org.example.Product;
 import org.example.ProductList;
 
@@ -61,69 +60,83 @@ public class Main {
             System.out.println("\nEnter id and quantity of product you want to buy");
             System.out.println("Enter product id : ");
             int productId = scanner.nextInt();
-            System.out.println("Enter product quantity you want to buy : ");
-            int productQuantity = scanner.nextInt();
-
-            for (Product product : productListObj.getProductList()) {
-                if (product.getId() == productId) {
-                    if(product.getQuantity()<productQuantity){
-                        System.out.println("Sorry, " + productQuantity + " " + product.getName() + " are temporary unavailable");
-                        System.out.println("We have " + product.getQuantity() + " " + product.getName() + " available");
-                        System.out.println("Do you want to buy " + product.getQuantity() + " " + product.getName() + "? (Y/N)");
-                        if(scanner.next().equalsIgnoreCase("y"))
-                            productQuantity = product.getQuantity();
-                        else
-                            break;
-                    }
-                    billPrice += product.getPrice() * productQuantity;
-                    product.setQuantity(product.getQuantity() - productQuantity);
-
-                    //Generating bill
-                    bill += product.getId() + "\t\t" + product.getName() + "\t\t" + productQuantity + "\t\t\t\t" + product.getPrice() + "\t\t\t" + product.getBrand() + "\t\t" + (product.getPrice()*productQuantity)/10 + "\t\t\t\t" + product.getPrice()*productQuantity + "\n";
+//            boolean pIdChoice = true;
+//            if(productId>7 || productId<1){
+//                pIdChoice = false;
+//                System.out.println("Incorrect Product Id entered, Try Again.");
+//            }
+//          if(pIdChoice) {
+    System.out.println("Enter product quantity you want to buy : ");
+    int productQuantity = scanner.nextInt();
+    for (Product product : productListObj.getProductList()) {
+        if (product.getId() == productId) {
+            if (product.getQuantity() < productQuantity) {
+                System.out.println("Sorry, " + productQuantity + " " + product.getName() + " are temporary unavailable");
+                System.out.println("We have " + product.getQuantity() + " " + product.getName() + " available");
+                System.out.println("Do you want to buy " + product.getQuantity() + " " + product.getName() + "? (Y/N)");
+                if (scanner.next().equalsIgnoreCase("y"))
+                    productQuantity = product.getQuantity();
+                else
                     break;
-                }
             }
+            billPrice += product.getPrice() * productQuantity;
+            product.setQuantity(product.getQuantity() - productQuantity);
 
-            System.out.println("Do you want to buy more products?(Y/N)");
-            choice = scanner.next();
-
-        } while (choice.equalsIgnoreCase("y"));
-
-        String coupon = "extra10";
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter coupon code: ");
-        String code = sc.next();
-        int couponDisc=0;
-        int moredisc =0;
-        if (coupon.equals(code)){
-            couponDisc = 10;
-            moredisc = billPrice/couponDisc;
-            System.out.println(coupon);
+            //Generating bill
+            bill += product.getId() + "\t\t" + product.getName() + "\t\t" + productQuantity + "\t\t\t\t" + product.getPrice() + "\t\t\t" + product.getBrand() + "\t\t" + (product.getPrice() * productQuantity) / 10 + "\t\t\t\t" + product.getPrice() * productQuantity + "\n";
+            break;
         }
-        else{
-            System.out.println("Incorrect coupon code entered !!");
-        }
-
-        System.out.println("\nYour bill : ");
-        System.out.println("Id\t\tName\t\tQuantity\t\tPrice\t\tBrand\t\tDiscount\t\tTotal\n----------------------------------------------------------------------------------------");
-        System.out.println(bill);
-
-        int disc = billPrice/10;
-        double gstamt = (((billPrice - disc + 20)-moredisc)*0.14);
-        System.out.println("your coupon discount is:\t\t\t\t\t\t\t\t\t\t\t\t\t " + moredisc);
-        System.out.println("delivery charge is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t 20");
-        System.out.println("GST: 14% after discount:\t\t\t\t\t\t\t\t\t\t\t\t\t" +String.format("%.2f",gstamt));
-        System.out.println("Your final bill is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + (((billPrice - disc + 20)-moredisc) + gstamt));
-
-        System.out.println("\nDo you again want to see products?(Y/N)");
-        String seeProducts = scanner.next();
-        if (seeProducts.equalsIgnoreCase("y")) {
-            obj.displayProducts();
-            System.out.println("\nPress 'Y' to buy products again\nPress 'N' to exit");
-            if(scanner.next().equalsIgnoreCase("y"))
-                obj.getUserChoice();
-        }
-        System.out.println("\nThankyou for shopping. Enjoy your day!!");
     }
 
-}
+                System.out.println("Do you want to buy more products?(Y/N)");
+                choice = scanner.next();
+            } while (choice.equalsIgnoreCase("y"));
+
+
+
+    String coupon = "extra10";
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter coupon code: ");
+    String code = sc.next();
+
+    int couponDisc = 0;
+    int moredisc = 0;
+
+
+
+
+                if (coupon.equals(code)) {
+                    couponDisc = 10;
+                    moredisc = billPrice / couponDisc;
+                    System.out.println("Entered coupon code is: " + coupon);
+                } else {
+                    System.out.println("Incorrect coupon code entered !!");
+                }
+
+                System.out.println("\nYour bill : ");
+                System.out.println("Id\t\tName\t\tQuantity\t\tPrice\t\tBrand\t\tDiscount\t\tTotal\n----------------------------------------------------------------------------------------");
+                System.out.println(bill);
+
+                int disc = billPrice / 10;
+                int delCharge = billPrice/100;
+                double gstamt = (((billPrice - disc + delCharge) - moredisc) * 0.14);
+                System.out.println("your coupon discount is:\t\t\t\t\t\t\t\t\t\t\t\t\t " + moredisc);
+                System.out.println("delivery charge is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + delCharge);
+                System.out.println("GST: 14% after discount:\t\t\t\t\t\t\t\t\t\t\t\t\t" + String.format("%.2f", gstamt));
+                System.out.println("Your final bill is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + (((billPrice - disc + delCharge) - moredisc) + gstamt));
+
+                System.out.println("\nDo you again want to see products?(Y/N)");
+                String seeProducts = scanner.next();
+                if (seeProducts.equalsIgnoreCase("y")) {
+                    obj.displayProducts();
+                    System.out.println("\nPress 'Y' to buy products again\nPress 'N' to exit");
+                    if (scanner.next().equalsIgnoreCase("y"))
+                        obj.getUserChoice();
+                }
+                System.out.println("\nThankyou for shopping. Enjoy your day!!");
+            }
+//        } while (choice.equalsIgnoreCase("y"));
+
+    }
+
+
