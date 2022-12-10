@@ -66,8 +66,9 @@ public class Main {
 //                System.out.println("Incorrect Product Id entered, Try Again.");
 //            }
 //          if(pIdChoice) {
-    System.out.println("Enter product quantity you want to buy : ");
-    int productQuantity = scanner.nextInt();
+              System.out.println("Enter product quantity you want to buy : ");
+              int productQuantity = scanner.nextInt();
+
     for (Product product : productListObj.getProductList()) {
         if (product.getId() == productId) {
             if (product.getQuantity() < productQuantity) {
@@ -79,6 +80,7 @@ public class Main {
                 else
                     break;
             }
+
             billPrice += product.getPrice() * productQuantity;
             product.setQuantity(product.getQuantity() - productQuantity);
 
@@ -102,9 +104,6 @@ public class Main {
     int couponDisc = 0;
     int moredisc = 0;
 
-
-
-
                 if (coupon.equals(code)) {
                     couponDisc = 10;
                     moredisc = billPrice / couponDisc;
@@ -120,10 +119,12 @@ public class Main {
                 int disc = billPrice / 10;
                 int delCharge = billPrice/100;
                 double gstamt = (((billPrice - disc + delCharge) - moredisc) * 0.14);
-                System.out.println("your coupon discount is:\t\t\t\t\t\t\t\t\t\t\t\t\t " + moredisc);
-                System.out.println("delivery charge is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + delCharge);
+                System.out.println("Coupon discount:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t " + moredisc);
+                System.out.println("delivery charge:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + delCharge);
+                System.out.println("Bill without discount:\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + billPrice);
                 System.out.println("GST: 14% after discount:\t\t\t\t\t\t\t\t\t\t\t\t\t" + String.format("%.2f", gstamt));
-                System.out.println("Your final bill is:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + (((billPrice - disc + delCharge) - moredisc) + gstamt));
+                double finalBill = (((billPrice - disc + delCharge) - moredisc) + gstamt);
+                System.out.println("Your final bill:\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + String.format("%.2f",finalBill));
 
                 System.out.println("\nDo you again want to see products?(Y/N)");
                 String seeProducts = scanner.next();
